@@ -325,7 +325,7 @@
         Console.WriteLine()
 
         For Count = 1 To NoOfRecentScores
-            If RecentScores(Count).istt = False Then
+            If RecentScores(Count).istt = "False" Then
                 If RecentScores(Count).Name <> "" Then
                     score = score + 1
                     Console.WriteLine(RecentScores(Count).Name & " got a score of " & RecentScores(Count).Score & " at " & RecentScores(Count).istt)
