@@ -134,7 +134,7 @@ Module CardPredict
     Deck(52 - NoOfCardsTurnedOver).Rank = 0
   End Sub
 
-  Function IsNextCardHigher(ByVal LastCard As TCard, ByVal NextCard As TCard) As Boolean
+  Function IsNextCardHigher(ByVal LastCard As TCard, ByVal NextCard As TCard) As Boolean 'simple comparison algorithm'
     Dim Higher As Boolean
     Higher = False
     If NextCard.Rank > LastCard.Rank Then
@@ -143,7 +143,7 @@ Module CardPredict
     Return Higher
   End Function
 
-  Function GetPlayerName() As String
+  Function GetPlayerName() As String 'simple input function, serves to get players name'
     Dim PlayerName As String
     Console.WriteLine()
     Console.Write("Please enter your name: ")
@@ -152,7 +152,7 @@ Module CardPredict
     Return PlayerName
   End Function
 
-  Function GetChoiceFromUser() As Char
+  Function GetChoiceFromUser() As Char 'simple input function'
     Dim Choice As Char
     Console.Write("Do you think the next card will be higher than the last card (enter y or n)? ")
     Choice = Console.ReadLine
@@ -228,32 +228,32 @@ Module CardPredict
     Dim NextCard As TCard
     Dim LastCard As TCard
     Dim Higher As Boolean
-    Dim Choice As Char
+    Dim Choice As Char 'input is only 1 character long so declaring it as a string is unnescessary and violates good programming principles'
     GameOver = False
-    GetCard(LastCard, Deck, 0)
-    DisplayCard(LastCard)
-    NoOfCardsTurnedOver = 1
-    While NoOfCardsTurnedOver < 52 And Not GameOver
-      GetCard(NextCard, Deck, NoOfCardsTurnedOver)
-      Do
-        Choice = GetChoiceFromUser()
-      Loop Until Choice = "y" Or Choice = "n"
-      DisplayCard(NextCard)
-      NoOfCardsTurnedOver = NoOfCardsTurnedOver + 1
-      Higher = IsNextCardHigher(LastCard, NextCard)
-      If Higher And Choice = "y" Or Not Higher And Choice = "n" Then
+    GetCard(LastCard, Deck, 0) 'represents the first card. 0 is there as there are no cards turned over before this.'
+    DisplayCard(LastCard) 'shows card to player.'
+    NoOfCardsTurnedOver = 1 'since card is shown, the card is turned over. (in order to see the damn card) #logic '
+    While NoOfCardsTurnedOver < 52 And Not GameOver 'initates loop where it keeps going if theres still cards in the game, or if its not game over'
+      GetCard(NextCard, Deck, NoOfCardsTurnedOver) 
+      Do 'initiates do loop'
+        Choice = GetChoiceFromUser() 'gets user input using the GetChoiceFromUser function. function is easier to plop throughout code.
+      Loop Until Choice = "y" Or Choice = "n" 'repeats line untill correct input is plopped in'
+      DisplayCard(NextCard) 'shows the next card, insinuates user wether they are unfortunately right or idiotically wrong'
+      NoOfCardsTurnedOver = NoOfCardsTurnedOver + 1 'stepper increments by one (this is removed at game over)
+      Higher = IsNextCardHigher(LastCard, NextCard) 'recalls function to determine if next card is higher or not'
+      If Higher And Choice = "y" Or Not Higher And Choice = "n" Then 'uses if statement to determine wether the user is right (this is for right)'
         DisplayCorrectGuessMessage(NoOfCardsTurnedOver - 1)
         LastCard = NextCard
-      Else
+      Else 'indicates THE USER IS FFEEBLE AND SHOULD UNINSTALL THE GAME'
         GameOver = True
-      End If
-    End While
-    If GameOver Then
-      DisplayEndOfGameMessage(NoOfCardsTurnedOver - 2)
-      UpdateRecentScores(RecentScores, NoOfCardsTurnedOver - 2)
+      End If 'ends if statement'
+    End While 'ends while'
+    If GameOver Then 'checks if the game is over, since the entire sub is repeated if it isnt, continuing the game'
+      DisplayEndOfGameMessage(NoOfCardsTurnedOver - 2) 'displays endofgamemsg, parameter is score'
+      UpdateRecentScores(RecentScores, NoOfCardsTurnedOver - 2) 'adds score to recentscores, name is asked in called subroutine'
     Else
-      DisplayEndOfGameMessage(51)
-      UpdateRecentScores(RecentScores, 51)
+      DisplayEndOfGameMessage(51) 'player got everything, technically wins the game so it displays full score. 
+      UpdateRecentScores(RecentScores, 51) 'adds score to recentscores, name is asked in the called sub'
     End If
   End Sub
-End Module
+End Module 'end of entire code'
