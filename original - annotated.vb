@@ -184,7 +184,7 @@ Module CardPredict
     Next
   End Sub
 
-  Sub DisplayRecentScores(ByVal RecentScores() As TRecentScore)
+  Sub DisplayRecentScores(ByVal RecentScores() As TRecentScore) 'simple display scores sub'
     Dim Count As Integer
     Console.WriteLine()
     Console.WriteLine("Recent scores:")
@@ -198,32 +198,32 @@ Module CardPredict
     Console.ReadLine()
   End Sub
 
-  Sub UpdateRecentScores(ByRef RecentScores() As TRecentScore, ByVal Score As Integer)
-    Dim PlayerName As String
+  Sub UpdateRecentScores(ByRef RecentScores() As TRecentScore, ByVal Score As Integer) 'Declares subroutine and its parameters'
+    Dim PlayerName As String 
     Dim Count As Integer
-    Dim FoundSpace As Boolean
-    PlayerName = GetPlayerName()
-    FoundSpace = False
+    Dim FoundSpace As Boolean 'can only have two possible values, hence boolean. plus, boolean is very light in memory.
+    PlayerName = GetPlayerName() 'Uses function to recall Playername.'
+    FoundSpace = False 'safety first; Set to false before assuming anything.'
     Count = 1
-    While Not FoundSpace And Count <= NoOfRecentScores
+    While Not FoundSpace And Count <= NoOfRecentScores 'Checks if there is space in the array'
       If RecentScores(Count).Name = "" Then
-        FoundSpace = True
+        FoundSpace = True 'If there is space it'll make the boolean true
       Else
-        Count = Count + 1
+        Count = Count + 1 'Keeps going. 
       End If
     End While
-    If Not FoundSpace Then
-      For Count = 1 To NoOfRecentScores - 1
+    If Not FoundSpace Then 'if theres no space then it'll do this
+      For Count = 1 To NoOfRecentScores - 1 'moves everything in the array up by 1.'
         RecentScores(Count) = RecentScores(Count + 1)
       Next
-      Count = NoOfRecentScores
+      Count = NoOfRecentScores 
     End If
-    RecentScores(Count).Name = PlayerName
-    RecentScores(Count).Score = Score
+    RecentScores(Count).Name = PlayerName 'assigns playername to that specific matrice in the array'
+    RecentScores(Count).Score = Score 'assigns score to that specific matrice in the array'
   End Sub
 
-  Sub PlayGame(ByVal Deck() As TCard, ByRef RecentScores() As TRecentScore)
-    Dim NoOfCardsTurnedOver As Integer
+  Sub PlayGame(ByVal Deck() As TCard, ByRef RecentScores() As TRecentScore) 'declares playgame subroutine. 
+    Dim NoOfCardsTurnedOver As Integer 
     Dim GameOver As Boolean
     Dim NextCard As TCard
     Dim LastCard As TCard
