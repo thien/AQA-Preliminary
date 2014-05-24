@@ -3,12 +3,12 @@
 'written by the AQA COMP1 Programmer Team
 'developed in the Visual Studio 2008 (Console Mode) programming environment (VB.NET)
 
-Module CardPredic
-    Const NoOfRecentScores As Integer = 3 'global variable NoOfRecentScores is recalled throughout the code
+Module CardPredict
+    Const NoOfRecentScores As Integer = 3 'global variable NoOfRecentScores is recalled throughout the code. This can be modified safely
 
     Structure TCard 'Defines a structure, used in arrays relating to Decks.
-        Dim Suit As Integer 'Matrix variable, used to 
-        Dim Rank As Integer 'Matrix variable,
+        Dim Suit As Integer 'Matrix variable, You can assume that this is a fixed variable and will not change. (Cards don't randomly change suits.)
+        Dim Rank As Integer 'Matrix variable, You can assume that this is a fixed variable and will not change. (Cards don't randomly change suits.)
     End Structure 'ends the structure
 
     Structure TRecentScore 'declares structure for the RecentScore Array
@@ -19,17 +19,17 @@ Module CardPredic
     Sub Main() 'Declares Main() subroutine, this is the first subroutine that will be run, visible interface. This is used to show the menu.
         Dim Choice As Char 'Declares Choice, this is the input for the options given from the menu.
         Dim Deck(52) As TCard 'Declares deck, as this is used as a parameter
-        Dim RecentScores(NoOfRecentScores) As TRecentScore
-        Randomize()
-        Do
-            DisplayMenu()
-            Choice = GetMenuChoice()
+        Dim RecentScores(NoOfRecentScores) As TRecentScore 'declares RecentScores array, uses TRecentScore Structure. This is going to be used heavilly.
+        Randomize() 'Initialises Randomiser. Randomiser is a prebuilt function and is part of VB libraries. 
+        Do 'Initiates Do Loop, expect this to repeat untill a desired condition is met. 
+            DisplayMenu() 'Runs DisplayMenu() subroutine into Main().
+            Choice = GetMenuChoice() 'recalls GetMenuChoice() and assigns it to choice. I'm assuming this is done to make the code more pretty. 
             Select Case Choice 'Uses variable Choice and reads its value, and checks for match with the following variables below.
-                Case "1" 'If choice has this value it would execeute following lines
-                    LoadDeck(Deck) 'Loads the deck into memory, this is 
-                    ShuffleDeck(Deck)
-                    PlayGame(Deck, RecentScores)
-                Case "2"
+                Case "1" 'If choice has this value it would execeute following lines:
+                    LoadDeck(Deck) 'Runs LoadDeck sub. Loads the prementioned deck array as LoadDeck's parameter. At this stage it assigns values into deck array.
+                    ShuffleDeck(Deck) 'Runs ShuffleDeck subroutine. Runs shuffle algorithm onto deck array, since LoadDeck assigns the deck array in order.  
+                    PlayGame(Deck, RecentScores) 'Runs the game algorithm, Uses pre-declared parameters that were initialised in Sub Main()
+                Case "2" 'If choice has this value it would execeute following lines:
                     LoadDeck(Deck)
                     PlayGame(Deck, RecentScores)
                 Case "3"
@@ -37,7 +37,7 @@ Module CardPredic
                 Case "4"
                     ResetRecentScores(RecentScores)
             End Select
-        Loop Until Choice = "q"
+        Loop Until Choice = "q" 'Will repeat the loop until the variable Choice matches "q".
     End Sub
 
   Function GetRank(ByVal RankNo As Integer) As String
