@@ -30,19 +30,19 @@ Module CardPredict
                     ShuffleDeck(Deck) 'Runs ShuffleDeck subroutine. Runs shuffle algorithm onto deck array, since LoadDeck assigns the deck array in order.  
                     PlayGame(Deck, RecentScores) 'Runs the game algorithm, Uses pre-declared parameters that were initialised in Sub Main()
                 Case "2" 'If choice has this value it would execeute following lines:
-                    LoadDeck(Deck)
-                    PlayGame(Deck, RecentScores)
-                Case "3"
-                    DisplayRecentScores(RecentScores)
-                Case "4"
-                    ResetRecentScores(RecentScores)
-            End Select
-        Loop Until Choice = "q" 'Will repeat the loop until the variable Choice matches "q".
-    End Sub
+                    LoadDeck(Deck) 'Same thing as beforehand. Necessary as code is wiped when it has finished running.
+                    PlayGame(Deck, RecentScores) 'Runs game algorithm, but because ShuffleDeck hasn't been run beforehand, the deck here is unshuffled. 
+                Case "3" 'If choice has this value it would execeute following lines:
+                    DisplayRecentScores(RecentScores) 'Runs DisplayRecentScores subroutine with RecentScores as its variables. (parameters)'
+                Case "4" 'If choice has this value it would execeute following lines:
+                    ResetRecentScores(RecentScores) 'Runs ResetRecentScores subroutine with RecentScores as its variables. (parameters)'
+            End Select 'Ends case statement, no more choices are needed for now. Of course, you can make a case for "q"
+        Loop Until Choice = "q" 'Repeats the loop until the Choice matches "q". Do until loops are used as the condition would need to be met @ the end of the code 
+    End Sub 'Ends the sub of Main. Necessary otherwise code is long as balls and tedious to read, and would make AQA arseholes'
 
-  Function GetRank(ByVal RankNo As Integer) As String
-    Dim Rank As String = ""
-    Select Case RankNo
+  Function GetRank(ByVal RankNo As Integer) As String 'Declares function GetRank, and declares its parameters. Useful to use parameters instead of global variables
+    Dim Rank As String = "" 'declares rank, these are going to be used to represent the different values of the Ranks a card would have. 
+    Select Case RankNo 'Recalls parameter and matches it with one of its declared cases. This is the rank the individual card in the array would have.
       Case 1 : Rank = "Ace"
       Case 2 : Rank = "Two"
       Case 3 : Rank = "Three"
@@ -60,7 +60,7 @@ Module CardPredict
     Return Rank
   End Function
 
-  Function GetSuit(ByVal SuitNo As Integer) As String
+  Function GetSuit(ByVal SuitNo As Integer) As String 'Literal same thing from GetRank, but for suits. These are used for TCard.
     Dim Suit As String = ""
     Select Case SuitNo
       Case 1 : Suit = "Clubs"
@@ -71,7 +71,7 @@ Module CardPredict
     Return Suit
   End Function
 
-  Sub DisplayMenu()
+  Sub DisplayMenu() 'simple subroutine that only shows text. Used to display the menu.'
     Console.WriteLine()
     Console.WriteLine("MAIN MENU")
     Console.WriteLine()
@@ -83,48 +83,48 @@ Module CardPredict
     Console.Write("Select an option from the menu (or enter q to quit): ")
   End Sub
 
-  Function GetMenuChoice() As Char
+  Function GetMenuChoice() As Char 'Simple input function.
     Dim Choice As Char
     Choice = Console.ReadLine
     Console.WriteLine()
     Return Choice
   End Function
 
-  Sub LoadDeck(ByRef Deck() As TCard)
+  Sub LoadDeck(ByRef Deck() As TCard) 'Loads deck
     Dim Count As Integer
-    FileOpen(1, "deck.txt", OpenMode.Input)
+    FileOpen(1, "deck.txt", OpenMode.Input) 'Uses one of VB's premade functions (FileOpen), first variable is the file number, second is the location of txt. Third is the mode of the text. 
     Count = 1
-    While Not EOF(1)
-      Deck(Count).Suit = CInt(LineInput(1))
-      Deck(Count).Rank = CInt(LineInput(1))
-      Count = Count + 1
-    End While
-    FileClose(1)
+    While Not EOF(1) 'While not end of file, this is the determiner of the while loop.'
+      Deck(Count).Suit = CInt(LineInput(1)) 'Recalls one line of code and assigns it to Deck(Count).suit'
+      Deck(Count).Rank = CInt(LineInput(1)) 'recalls following line of that code and assigns it to Deck(Count).rank'
+      Count = Count + 1 'increments by 1, this count is incremented, so it acts as a stepper.'
+    End While 'ends loop'
+    FileClose(1) 'Closes file of 1. Good practice to close the file when you're done so it isn't hogging up memory.
   End Sub
 
-  Sub ShuffleDeck(ByRef Deck() As TCard)
+  Sub ShuffleDeck(ByRef Deck() As TCard) 'Declares ShuffleDeck subroutine, uses Deck as parameter.'
     Dim NoOfSwaps As Integer
     Dim Position1 As Integer
     Dim Position2 As Integer
-    Dim SwapSpace As TCard
+    Dim SwapSpace As TCard 'declared as TCard as it is holding a whole card and merely not a part.'
     Dim NoOfSwapsMadeSoFar As Integer
-    NoOfSwaps = 1000
-    For NoOfSwapsMadeSoFar = 1 To NoOfSwaps
-      Position1 = Int(Rnd() * 52) + 1
-      Position2 = Int(Rnd() * 52) + 1
-      SwapSpace = Deck(Position1)
-      Deck(Position1) = Deck(Position2)
-      Deck(Position2) = SwapSpace
+    NoOfSwaps = 1000 'This is going to be how many times the following loop is repeated, to ensure a good shuffle.'
+    For NoOfSwapsMadeSoFar = 1 To NoOfSwaps 'Declares loop and its rules.'
+      Position1 = Int(Rnd() * 52) + 1 'Int turns the position into a integer, its not nice to have half a card.
+      Position2 = Int(Rnd() * 52) + 1 'adds 1 to as Random is a generated decimal between 0 and 1. '
+      SwapSpace = Deck(Position1) 'Swapspace is a temporary holder. 
+      Deck(Position1) = Deck(Position2) 'Most Recent Holders'
+      Deck(Position2) = SwapSpace 'Most Recent Holders'
     Next
   End Sub
 
-  Sub DisplayCard(ByVal ThisCard As TCard)
+  Sub DisplayCard(ByVal ThisCard As TCard) 'simple display subroutine, parameters are used as good practice. This is going to be used a lot in the game. 
     Console.WriteLine()
-    Console.WriteLine("Card is the " & GetRank(ThisCard.Rank) & " of " & GetSuit(ThisCard.Suit))
+    Console.WriteLine("Card is the " & GetRank(ThisCard.Rank) & " of " & GetSuit(ThisCard.Suit)) 'Displays card and rank'
     Console.WriteLine()
   End Sub
 
-  Sub GetCard(ByRef ThisCard As TCard, ByRef Deck() As TCard, ByVal NoOfCardsTurnedOver As Integer)
+  Sub GetCard(ByRef ThisCard As TCard, ByRef Deck() As TCard, ByVal NoOfCardsTurnedOver As Integer) 
     Dim Count As Integer
     ThisCard = Deck(1)
     For Count = 1 To (51 - NoOfCardsTurnedOver)
@@ -159,7 +159,7 @@ Module CardPredict
     Return Choice
   End Function
 
-  Sub DisplayEndOfGameMessage(ByVal Score As Integer)
+  Sub DisplayEndOfGameMessage(ByVal Score As Integer) 'Displays scores when the game has ended. '
     Console.WriteLine()
     Console.WriteLine("GAME OVER!")
     Console.WriteLine("Your score was " & Score)
@@ -169,16 +169,16 @@ Module CardPredict
     Console.WriteLine()
   End Sub
 
-  Sub DisplayCorrectGuessMessage(ByVal Score As Integer)
+  Sub DisplayCorrectGuessMessage(ByVal Score As Integer) 'Displays scores in the progress of the game.
     Console.WriteLine()
     Console.WriteLine("Well done!  You guessed correctly.")
     Console.WriteLine("Your score is now " & Score & ".")
     Console.WriteLine()
   End Sub
 
-  Sub ResetRecentScores(ByRef RecentScores() As TRecentScore)
+  Sub ResetRecentScores(ByRef RecentScores() As TRecentScore) 
     Dim Count As Integer
-    For Count = 1 To NoOfRecentScores
+    For Count = 1 To NoOfRecentScores 'Loop, sets the entire array's contents to how VB represents an empty variable. Blank.
       RecentScores(Count).Name = ""
       RecentScores(Count).Score = 0
     Next
