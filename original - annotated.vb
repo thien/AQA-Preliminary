@@ -4,6 +4,7 @@
 'developed in the Visual Studio 2008 (Console Mode) programming environment (VB.NET)
 
 Module CardPredict
+
     Const NoOfRecentScores As Integer = 3 'global variable NoOfRecentScores is recalled throughout the code. This can be modified safely
 
     Structure TCard 'Defines a structure, used in arrays relating to Decks.
