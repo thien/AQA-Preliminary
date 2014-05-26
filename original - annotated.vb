@@ -7,9 +7,9 @@ Module CardPredict
 
     Const NoOfRecentScores As Integer = 3 'global variable NoOfRecentScores is recalled throughout the code. This can be modified safely
 
-    Structure TCard 'Defines a structure, used in arrays relating to Decks.
+    Structure TCard 'Defines a structure, used in arrays relating to Decks. This gives the card two properties that move with the card.
         Dim Suit As Integer 'Matrix variable, You can assume that this is a fixed variable and will not change. (Cards don't randomly change suits.)
-        Dim Rank As Integer 'Matrix variable, You can assume that this is a fixed variable and will not change. (Cards don't randomly change suits.)
+        Dim Rank As Integer 'Matrix variable, You can assume that this is a fixed variable and will not change. (Cards don't randomly change Ranks.)
     End Structure 'ends the structure
 
     Structure TRecentScore 'declares structure for the RecentScore Array
@@ -24,7 +24,7 @@ Module CardPredict
         Randomize() 'Initialises Randomiser. Randomiser is a prebuilt function and is part of VB libraries. 
         Do 'Initiates Do Loop, expect this to repeat untill a desired condition is met. 
             DisplayMenu() 'Runs DisplayMenu() subroutine into Main().
-            Choice = GetMenuChoice() 'recalls GetMenuChoice() and assigns it to choice. I'm assuming this is done to make the code more pretty. 
+            Choice = GetMenuChoice() 'recalls GetMenuChoice() and assigns it to choice. MOST RECENT PLACE HOLDER
             Select Case Choice 'Uses variable Choice and reads its value, and checks for match with the following variables below.
                 Case "1" 'If choice has this value it would execeute following lines:
                     LoadDeck(Deck) 'Runs LoadDeck sub. Loads the prementioned deck array as LoadDeck's parameter. At this stage it assigns values into deck array.
@@ -38,7 +38,7 @@ Module CardPredict
                 Case "4" 'If choice has this value it would execeute following lines:
                     ResetRecentScores(RecentScores) 'Runs ResetRecentScores subroutine with RecentScores as its variables. (parameters)'
             End Select 'Ends case statement, no more choices are needed for now. Of course, you can make a case for "q"
-        Loop Until Choice = "q" 'Repeats the loop until the Choice matches "q". Do until loops are used as the condition would need to be met @ the end of the code 
+        Loop Until Choice = "q" 'Repeats the loop until the Choice matches "q". Q CONTROLS THE LOOP
     End Sub 'Ends the sub of Main. Necessary otherwise code is long as balls and tedious to read, and would make AQA arseholes'
 
   Function GetRank(ByVal RankNo As Integer) As String 'Declares function GetRank, and declares its parameters. Useful to use parameters instead of global variables
@@ -95,7 +95,7 @@ Module CardPredict
     Dim Count As Integer
     FileOpen(1, "deck.txt", OpenMode.Input) 'Uses one of VB's premade functions (FileOpen), first variable is the file number, second is the location of txt. Third is the mode of the text. 
     Count = 1
-    While Not EOF(1) 'While not end of file, this is the determiner of the while loop.'
+    While Not EOF(1) 'While not end of file, this is the determiner of the while loop.' EOF IS A PRE-DECLARED FUNCTION
       Deck(Count).Suit = CInt(LineInput(1)) 'Recalls one line of code and assigns it to Deck(Count).suit'
       Deck(Count).Rank = CInt(LineInput(1)) 'recalls following line of that code and assigns it to Deck(Count).rank'
       Count = Count + 1 'increments by 1, this count is incremented, so it acts as a stepper.'
@@ -109,13 +109,13 @@ Module CardPredict
     Dim Position2 As Integer
     Dim SwapSpace As TCard 'declared as TCard as it is holding a whole card and merely not a part.'
     Dim NoOfSwapsMadeSoFar As Integer
-    NoOfSwaps = 1000 'This is going to be how many times the following loop is repeated, to ensure a good shuffle.'
+    NoOfSwaps = 1000 'This is going to be how many times the following loop is repeated, to ensure a good shuffle.' ASSIGNMENT STATEMENT
     For NoOfSwapsMadeSoFar = 1 To NoOfSwaps 'Declares loop and its rules.'
       Position1 = Int(Rnd() * 52) + 1 'Int turns the position into a integer, its not nice to have half a card.
       Position2 = Int(Rnd() * 52) + 1 'adds 1 to as Random is a generated decimal between 0 and 1. '
       SwapSpace = Deck(Position1) 'Swapspace is a temporary holder. 
-      Deck(Position1) = Deck(Position2) 'Most Recent Holders'
-      Deck(Position2) = SwapSpace 'Most Recent Holders'
+      Deck(Position1) = Deck(Position2) 'Most Recent Place Holders'
+      Deck(Position2) = SwapSpace 'Most Recent Place Holders'
     Next
   End Sub
 
@@ -210,7 +210,7 @@ Module CardPredict
       If RecentScores(Count).Name = "" Then
         FoundSpace = True 'If there is space it'll make the boolean true
       Else
-        Count = Count + 1 'Keeps going. 
+        Count = Count + 1 'Keeps going. GATHERER
       End If
     End While
     If Not FoundSpace Then 'if theres no space then it'll do this
