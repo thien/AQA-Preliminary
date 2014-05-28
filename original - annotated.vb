@@ -14,7 +14,7 @@ Module CardPredict
 
     Structure TRecentScore 'declares structure for the RecentScore Array
         Dim Name As String 'declares name variable, inset for name for array matrix
-        Dim Score As Integer 'declares score variable, inset for score for array matrix
+        Dim Score As Integer 'declares score variable, inset for score for array matrix, THIS IS THE MOST WANTED HOLDER!
     End Structure 'ends the structure, terminating its code. May conserve memory
 
     Sub Main() 'Declares Main() subroutine, this is the first subroutine that will be run, visible interface. This is used to show the menu.
